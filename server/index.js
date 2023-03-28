@@ -10,7 +10,7 @@ const { toBuffer } = require("ethereum-cryptography/utils");
 app.use(cors());
 app.use(express.json());
 
-// priv keys
+// priv keys for testing purposes. Order matching the addresses below. These are not real keys.
 // ff67988c0f1f7e83500432b7334a1b4892a677bcabea753d0708c616691f1ebd
 // 105ffdf75ba220d380ada6f6aefbcb6aca28e250c00e18a4487b039c60da6aa5
 // b5a43865d7d65f12b744499166c3f436ed0a91907ae243aa8df709584c56da29
@@ -36,7 +36,7 @@ app.post("/send", (req, res) => {
 
   const [sig, recoveryBit] = signature;
 
-  const publicKey = secp.recoverPublicKey(messageHash, sig, recoveryBit, false);
+  const publicKey = secp.recoverPublicKey(messageHash, sig, recoveryBit);
 
   if (toHex(publicKey.slice(1).slice(-20)) !== payload.sender) {
     res.status(400).send({ message: "Invalid signature!" });
